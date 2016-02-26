@@ -57,7 +57,9 @@ $ ssh vagrant@10.1.1.2
 
 with password ```vagrant```.
 
-Erros that may occured :
+####Erros that may occured :
+
+* Memory error :
 
 ```
 A customization command failed:
@@ -80,10 +82,12 @@ Please fix this customization and try again.
 ```
 that means that the memory value in the Vagrantfile file is not in the range of the virtual machine memory size (between 4 MB and 3584 MB). Check the Vagrantfile file in ubuntu-trusty at the line 13 and change the value.
 
+ * IP address error
+
 ```
 $ ssh: connect to host 10.1.1.2 port 22: No route to host :
 ```
-Check the Vagrantfile file in ubuntu-trusty at the line 8 to see if the IP adress is the same that the one in /etc/hosts/.
+Check the Vagrantfile file in ubuntu-trusty at the line 8 to see if the IP address is the same that the one in /etc/hosts/.
 
 #### 2. Ansible
 
