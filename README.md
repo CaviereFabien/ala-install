@@ -57,6 +57,34 @@ $ ssh vagrant@10.1.1.2
 
 with password ```vagrant```.
 
+Erros that may occured :
+
+```
+A customization command failed:
+
+["modifyvm", :id, "--memory", "4096"]
+
+The following error was experienced:
+
+#<Vagrant::Errors::VBoxManageError: There was an error while executing `VBoxManage`, a CLI used by Vagrant
+for controlling VirtualBox. The command and stderr is shown below.
+
+Command: ["modifyvm", "f2fd9fe3-3058-4ad8-91c0-b7bdbeb29fc2", "--memory", "4096"]
+
+Stderr: VBoxManage: error: Invalid RAM size: 4096 MB (must be in range [4, 3584] MB)
+VBoxManage: error: Details: code NS_ERROR_INVALID_ARG (0x80070057), component SessionMachine, interface IMachine, callee nsISupports
+VBoxManage: error: Context: "COMSETTER(MemorySize)(ValueUnion.u32)" at line 558 of file VBoxManageModifyVM.cpp
+>
+
+Please fix this customization and try again.
+```
+that means that the memory value in the Vagrantfile file is not in the range of the virtual machine memory size (between 4 MB and 3584 MB). Check the Vagrantfile file in ubuntu-trusty at the line 13 and change the value.
+
+```
+$ ssh: connect to host 10.1.1.2 port 22: No route to host :
+```
+Check the Vagrantfile file in ubuntu-trusty at the line 8 to see if the IP adress is the same that the one in /etc/hosts/.
+
 #### 2. Ansible
 
 An [Ansible inventory file](http://docs.ansible.com/intro_inventory.html) is included that allows for running against a Vagrant configured VM (see ```inventories/vagrant/demo-vagrant```). Other inventories can easily be crafted to match other infrastructure.  
@@ -86,6 +114,15 @@ Here are the steps to run with this inventory:
 12.12.12.12	ala-demo	ala-demo.org 
 ```
 You'll need to replace "12.12.12.12" with the IP address of your newly created Ubuntu 14 instance.
+
+ * Check the line 22 on ala-install/ansible/inventories/demo-ec2, you should have this :
+```
+data_dir=/data
+```
+rather than this : 
+```
+data_dir=/mnt
+```
 
  * Run the following:
 ```
